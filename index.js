@@ -24,12 +24,21 @@ const server = http.createServer((req, res) => {
             const parseBody = Buffer.concat(body).toString();
             const message = parseBody.split('=')[1];
             console.log(message);
-            fs.writeFileSync('message.txt', message);
+            fs.writeFile('message.txt', message, end => {
+                res.statusCode = 302;
+                res.setHeader('Location', '/')
+                return res.end();
+            });
         })
-        res.statusCode = 302;
-        res.setHeader('Location', '/')
-        res.end();
     }
+    res.setHeader('Content-type', 'text/html');
+    res.write('<html>');
+    res.write('<head><title>my first page</title></head>');
+    res.write('<body><h1>hello from my NODE.JS Server</f1></body>');
+    res.write('</html>');
+
+    res.end();
+
 });
 
 
