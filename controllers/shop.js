@@ -20,6 +20,12 @@ exports.getIndex = (req, res, next) => {
     });
 }
 
+exports.getOrders = (req, res, next) => {
+    res.render('shop/order', {
+        path: '/orders',
+        pageTitle: 'Your Orders'
+    });
+}
 
 exports.getCart = (req, res, next) => {
     res.render('shop/cart', {
