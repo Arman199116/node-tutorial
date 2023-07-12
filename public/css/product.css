@@ -26,6 +26,7 @@
     outline-color: #00695c;
 }
 
+.btn,
 button {
     font: inherit;
     border: 1px solid #460aa7;
@@ -34,13 +35,18 @@ button {
     border-radius: 3px;
     cursor: pointer;
 }
-
+.btn:hover,
+.btn:active,
 button:hover,
 button:active {
     background-color: #460aa7;
     color: white;
 }
-.grid, {
+.card__actions {
+    display: flex;
+    gap: 8px;
+}
+.grid {
     row-gap: 10px;
 }
 .grid, .card, .card__content {
