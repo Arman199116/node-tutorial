@@ -1,19 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
 const path = require('path');
+const errorController = require('./controllers/error');
+const db = require('./util/database');
 
 
 const app = express();
-var cors = require('cors');
-const errorController = require('./controllers/error');
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+let cors = require('cors');
+
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
 app.use(express.json());
 
 app.use(cors());
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+db.execute('SELECT * FROM products')
+    .then(result => {
+        console.log(result[0]);
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static( path.join(__dirname, 'public')));
