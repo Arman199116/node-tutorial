@@ -2,25 +2,24 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
-    .then(([rows, fieldData]) => {
-        
-        res.render('shop/products-list', {
-            prods: rows,
-            pageTitle: 'All product',
-            path: '/products'
-        });
-    })
-    .catch(err => console.log('Err ', err));
+    Product.findAll()
+        .then(products => {
+            res.render('shop/products-list', {
+                prods: products,
+                pageTitle: 'All product',
+                path: '/products'
+            });
+        })
+        .catch(err => console.log('Err1 ', err));
 }
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([product]) => {
+    Product.findByPk(prodId)
+        .then(product => {
             res.render('shop/product-detail', {
-                product: product[0],
-                pageTitle: product[0].title,
+                product: product,
+                pageTitle: product.title,
                 path: '/products'
             })
 
@@ -29,11 +28,10 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
-        .then(([rows, fieldData]) => {
-            console.log(rows);
+    Product.findAll()
+        .then(products => {
             res.render('shop/index', {
-                prods: rows,
+                prods: products,
                 pageTitle: 'Shop',
                 path: '/'
             });
@@ -55,7 +53,7 @@ exports.getCart = (req, res, next) => {
             for (const product of products) {
                 const cartProductData = cart.products.find(prod => prod.id === product.id);
                 if (cartProductData) {
-                    cartProducts.push({productData: product, qty: cartProductData.qty});
+                    cartProducts.push({ productData: product, qty: cartProductData.qty });
                 }
             }
             res.render('shop/cart', {
