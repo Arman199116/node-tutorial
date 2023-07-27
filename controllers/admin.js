@@ -23,16 +23,6 @@ exports.postAddProduct = (req, res, next) => {
     .catch(err => console.log('err111 ', err))
 }
 
-exports.postAddProductc = (req, res, next) => {
-    const d = req.body;
-
-    console.log('ssssssssss ', d);
-    console.log('req.query. ', req.params.carId);
-    
-        res.redirect('/admin/products/41');
-    
-}
-
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
